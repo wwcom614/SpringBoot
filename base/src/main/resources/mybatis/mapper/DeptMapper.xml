@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ww.base.mapper.DeptMapper">
+    <resultMap id="BaseResultMap" type="com.ww.base.model.DeptModel">
+        <id column="dept_no" property="deptNo" jdbcType="INTEGER"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        dept_no, dept_name
+    </sql>
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM dept;
+    </select>
+    <select id="findOneByDeptNo" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM dept
+        WHERE dept_no = #{dept_no, jdbcType=INTEGER};
+    </select>
+</mapper>

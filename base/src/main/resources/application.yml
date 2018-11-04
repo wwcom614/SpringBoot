@@ -1,0 +1,113 @@
+server:
+  port: 80      # 此处设置的服务的访问端口配置
+
+self-config:  # 自定义配置项
+  person:
+    name: ww
+    age: 38
+
+
+spring:  # 表示该配置直接为Spring容器负责处理
+
+  messages:   # 表示该配置直接为Spring容器负责处理
+    basename: i18n/person  # 资源文件路径和名称，多个之间英文逗号分隔
+
+  thymeleaf: # 使用默认值即可，不建议修改
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false # 生产环境需要为true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/springbootdb?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ww
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat,wall,log4j  # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    dbcp2:
+      min-idle: 5 # 数据库连接池的最小维持连接数
+      initial-size: 5 # 数据库连接池的初始化连接数
+      max-idle: 5 # 数据库连接池的最大连接数
+      max-wait-millis: 2000 # 数据库连接池的等待连接超时时间
+
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQL5Dialect
+
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    template:
+      default-topic: ww
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 0 # 消息发送失败的情况下，重试发送的次数。MAX 无限重试
+      batch-size: 1024
+      buffer-memory: 40960
+      acks: all # 所有副本都同步到数据时send方法才返回，安全性最高，性能最低
+
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: group-1
+      auto-offset-reset: earliest # 没找到上次offset传输到哪了，从哪边开始消费。earliest保证不丢，但可能重复。
+      enable-auto-commit: false
+      auto-commit-interval: 1000
+      fetch-max-wait: 1000
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    database: 0  # Redis数据库索引（默认为0）
+    timeout: 5000 # 连接超时时间(毫秒)
+    jedis:
+      pool:
+        max-active: 10 # 最大活跃连接数，使用负值表示没有限制
+        max-wait: 100 # 最大等待时间(毫秒)，使用负值表示没有限制
+        max-idle: 5 # 最大维持连接数
+        min-idle: 1 # 最小维持连接数
+
+
+  servlet:
+    multipart:
+      max-file-size: 1KB # 文件上传的单个最大文件大小限制
+      max-request-size: 1MB # 一次请求的多个文件上传的总体最大大小限制
+      file-size-threshold: 256 # 当上传文件达到阈值时，缓存到磁盘
+      location: / # 设置文件上传的临时目录
+
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+
+  mail:
+    host: smtp.qq.com
+    username: wwcom614@qq.com
+    password: 邮箱服务器开启SMTP等邮箱服务给出的密码
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+
+
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml
+  type-aliases-package: com.ww.base.model # 定义所有被操作类的别名所在包
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+
+logging:
+  level:
+    com.ww.base.mapper: trace
+
+
+
+
+
+
+

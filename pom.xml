@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ww</groupId>
+    <artifactId>springboot</artifactId>
+    <version>1.0</version>
+    <!-- 注意 父工程的packaging是pom-->
+    <packaging>pom</packaging>
+
+    <!-- 父工程统一指定SpringBoot版本 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.5.RELEASE</version>
+    </parent>
+
+    <!-- 父工程设置涉及的子Module工程 -->
+    <modules>
+        <module>base</module>
+        <module>shiro-comman</module>
+        <module>shiro-provider</module>
+        <module>shiro-web</module>
+    </modules>
+
+    <!-- 父工程使用dependencyManagement -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.0.5.RELEASE</version>
+                <!-- 父工程必须这样配置 -->
+                <type>pom</type>
+                <!-- 父工程必须这样配置 -->
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+
+
+
+</project>
