@@ -149,8 +149,8 @@ PS：SQL建库建表脚本dept.sql。
 - Kafka生产者和消费者    
 KafkaMessage.java，KafkaProducerServiceImpl.java，KafkaConsumerServiceImpl.java      
 1.pom.xml增加spring-kafka。  
-2.application.yml中增加Kafka的服务端server、生产者producer、消费者consumer配置。 
-3.model中定义了一个KafkaMessage，用于封装向Kafka发送的消息。  
+2.application.yml中增加Kafka的服务端server、生产者producer、消费者consumer配置。   
+3.model中定义了一个KafkaMessage，用于封装向Kafka发送的消息。   
 4.编写KafkaProducerServiceImpl：  
 定义了一个泛型类KafkaProducerServiceImpl<T>，T就是发送的消息对象，序列化使用了阿里的fastjson。 
 使用 KafkaTemplate.send消息，Spring Boot自动装配，没必要自己再定义一个Kafka配置类。   
